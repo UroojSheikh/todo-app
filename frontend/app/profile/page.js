@@ -14,7 +14,7 @@ export default function ProfilePage() {
 
   async function fetchProfile(token) {
     try {
-      const res = await fetch("http://localhost:5000/auth/me", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
         headers: { Authorization: "Bearer " + token },
       });
       const data = await res.json();
@@ -54,7 +54,7 @@ export default function ProfilePage() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch("http://localhost:5000/auth/me", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

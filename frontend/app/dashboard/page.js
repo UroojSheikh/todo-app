@@ -33,7 +33,7 @@ export default function DashboardPage() {
 
   async function fetchTasks(token) {
     try {
-      const res = await fetch("http://localhost:5000/tasks", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -60,7 +60,7 @@ export default function DashboardPage() {
         formData.append("images", img);
       });
 
-      const res = await fetch("http://localhost:5000/tasks", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -87,7 +87,7 @@ export default function DashboardPage() {
   async function toggleComplete(task) {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`http://localhost:5000/tasks/${task.id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${task.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export default function DashboardPage() {
   async function deleteTask(id) {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -134,7 +134,7 @@ export default function DashboardPage() {
   async function saveEdit(taskId) {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`http://localhost:5000/tasks/${taskId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -148,7 +148,7 @@ export default function DashboardPage() {
         const formData = new FormData();
         editNewImages.forEach((img) => formData.append("images", img));
 
-        const imgRes = await fetch(`http://localhost:5000/tasks/${taskId}/images`, {
+        const imgRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskId}/images`, {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
           body: formData,
@@ -167,7 +167,7 @@ export default function DashboardPage() {
   async function removeImage(taskId, imageUrl) {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`http://localhost:5000/tasks/${taskId}/images`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${taskId}/images`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -298,7 +298,7 @@ export default function DashboardPage() {
                       {task.imageUrls.map((url, i) => (
                         <div key={i} className="relative">
                           <img
-                            src={`http://localhost:5000${url}`}
+                            src={`${process.env.NEXT_PUBLIC_API_URL}${url}`}
                             alt={task.title}
                             className="w-20 h-20 object-cover rounded-lg border border-gray-200"
                           />
@@ -366,7 +366,7 @@ export default function DashboardPage() {
                           {task.imageUrls.map((url, i) => (
                             <img
                               key={i}
-                              src={`http://localhost:5000${url}`}
+                              src={`${process.env.NEXT_PUBLIC_API_URL}${url}`}
                               alt={task.title}
                               className="w-24 h-24 object-cover rounded-lg border border-gray-200"
                             />

@@ -14,10 +14,10 @@ export default function AdminPage() {
   async function fetchData(token) {
     try {
       const [pendingRes, usersRes] = await Promise.all([
-        fetch("http://localhost:5000/superuser/pending", {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/superuser/pending`, {
           headers: { Authorization: "Bearer " + token },
         }),
-        fetch("http://localhost:5000/superuser/users", {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/superuser/users`, {
           headers: { Authorization: "Bearer " + token },
         }),
       ]);
@@ -56,7 +56,7 @@ export default function AdminPage() {
   async function handleApprove(id) {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("http://localhost:5000/superuser/approve/" + id, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/superuser/approve/` + id, {
         method: "POST",
         headers: { Authorization: "Bearer " + token },
       });
@@ -71,7 +71,7 @@ export default function AdminPage() {
   async function handleReject(id) {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("http://localhost:5000/superuser/reject/" + id, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/superuser/reject/` + id, {
         method: "POST",
         headers: { Authorization: "Bearer " + token },
       });
@@ -92,7 +92,7 @@ export default function AdminPage() {
       return;
     }
     try {
-      const res = await fetch("http://localhost:5000/superuser/users/" + id, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/superuser/users/` + id, {
         method: "DELETE",
         headers: { Authorization: "Bearer " + token },
       });
