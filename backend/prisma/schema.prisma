@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String    @unique
+  passwordHash String
+  dateOfBirth  DateTime
+  city         String
+  phone        String
+  role         Role      @default(USER)
+  status       Status    @default(PENDING)
+  isVerified   Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  otpCodes     OtpCode[]
+  tasks        Task[]
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  imageUrls   String[] @default([])
+  isCompleted Boolean  @default(false)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model OtpCode {
+  id        String   @id @default(uuid())
+  code      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+
+enum Role {
+  USER
+  SUPERUSER
+}
+
+enum Status {
+  PENDING
+  APPROVED
+  REJECTED
+}
